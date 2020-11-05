@@ -1,0 +1,38 @@
+{
+  "name": "node_self",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec ./node_modules/.bin/babel-node ./src/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "elasticsearch": "^16.7.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.1",
+    "@babel/node": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tienvan4119/Base_ExpressJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tienvan4119/Base_ExpressJS/issues"
+  },
+  "homepage": "https://github.com/tienvan4119/Base_ExpressJS#readme",
+  "description": ""
+}

@@ -15,24 +15,17 @@
     "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
     "mongoose": "^5.10.9",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pirates": "^4.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.1",
-    "@babel/node": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
-    "eslint": "^7.11.0",
-    "eslint-config-airbnb": "^18.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tienvan4119/Base_ExpressJS.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tienvan4119/Base_ExpressJS/issues"
-  },
-  "homepage": "https://github.com/tienvan4119/Base_ExpressJS#readme",
-  "description": ""
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "nodemon": "^2.0.6"
+  }
 }

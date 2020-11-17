@@ -1,6 +1,10 @@
 import Controller from '../../core/Controller'
 import PostService from './service';
-
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({
+    host:"localhost:9200"
+});
+import Destinations from '../../../database/schemas/Destinations';
 export default class PostController extends Controller{
 
     service = PostService.getService();
@@ -18,4 +22,5 @@ export default class PostController extends Controller{
         const condition = req.query
         res.send(await this.service.getManyWithRelation(condition));
     }
+    
 }

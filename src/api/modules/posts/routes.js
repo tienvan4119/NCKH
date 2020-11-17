@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import PostController from './controller'
+import Destinations from '../../../database/schemas/Destinations';
 
 /** @swagger
  * tags:
@@ -24,7 +25,7 @@ routes.post('/', (req, res)=>{
             match: { "content": req.body.text }
           },
         }
-      },function (error, response,status) {
+      }, async function (error, response,status) {
           if (error){
             console.log("search error: "+error)
           }
@@ -32,9 +33,39 @@ routes.post('/', (req, res)=>{
             console.log("--- Response ---");
             // console.log(response);
             console.log("--- Hits ---");
-            res.json(response.hits.hits)
+           
+            const result = await Promise.all(
+              response.hits.hits.map(async hit => {
+              
+                // console.log(hit._source.destination_id)
+                
+                let destination = client.search({
+                  index : 'destinations',
+                  type : 'DESTINATIONS',
+                  body : {
+                    query : {
+                      "match" : {"_id" : hit._source.destination_id}
+                    },
+                  }
+                })
+                destination = (await destination).hits.hits
+                
+            
+                // const destination = await Destinations.findById(hit._source.destination_id)
+                // // console.log()
+                return {
+                  ...hit,
+                  destination
+                }
+              })
+            )
+            
+            res.json(result)
+          
           }
       });
+
+  
 })
 
 routes.get('/', (req, res)=>{
@@ -55,7 +86,6 @@ routes.get('/', (req, res)=>{
         // console.log(response);
         console.log("--- Hits ---");
         res.json(response.hits.hits)
-
       }
   })
 })

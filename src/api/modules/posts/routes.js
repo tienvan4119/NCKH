@@ -48,9 +48,11 @@ routes.post('/', (req, res)=>{
                     },
                   }
                 })
-                destination = (await destination).hits.hits
-                
-            
+                // destination = (await destination).hits.hits
+                destination = (await destination).hits.hits[0]
+                destination = {
+                  id: destination._id, ...destination._source
+                }
                 // const destination = await Destinations.findById(hit._source.destination_id)
                 // // console.log()
                 return {

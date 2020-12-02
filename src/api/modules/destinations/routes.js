@@ -38,12 +38,34 @@ routes.post('/', (req, res)=>{
 })
 
 routes.get('/', (req, res)=>{
-  client.search({  
+  client.search({
       index: 'destinations',
       type: 'DESTINATIONS',
       body: {
         query: {
           "match_all": {}
+        },
+      }
+    }, function (error, response,status) {
+      if (error){
+        console.log("search error: "+error)
+      }
+      else {
+        console.log("--- Response ---");
+        // console.log(response);
+        console.log("--- Hits ---");
+        res.json(response.hits.hits)
+      }
+  })
+})
+
+routes.get('/:type', (req, res)=>{
+  client.search({  
+      index: 'destinations',
+      type: 'DESTINATIONS',
+      body: {
+        query: {
+          match: { "type": req.params.type }
         },
       }
     }, function (error, response,status) {

@@ -49,25 +49,31 @@ routes.post('/', (req, res)=>{
                   }
                 })
                 // destination = (await destination).hits.hits
+                // destination = (await destination).hits.hits[0]
+                // console.log(destination)
                 destination = (await destination).hits.hits[0]
                 destination = {
                   id: destination._id, ...destination._source
                 }
+                // destination = {
+                //   id: destination._id, ...destination._source
+                // }
                 // const destination = await Destinations.findById(hit._source.destination_id)
                 // // console.log()
+                console.log("🚀 ~ file: routes.js ~ line 64 ~ routes.post ~ destination", destination)
                 return {
                   ...hit,
                   destination
                 }
               })
-            )
+                
+             )
             
             res.json(result)
           
           }
       });
 
-  
 })
 
 routes.get('/', (req, res)=>{

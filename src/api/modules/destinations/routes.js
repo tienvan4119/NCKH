@@ -42,6 +42,7 @@ routes.get('/', (req, res)=>{
       index: 'destinations',
       type: 'DESTINATIONS',
       body: {
+        "from" : 0, "size" : req.query.size || 5,
         query: {
           "match_all": {}
         },
@@ -60,11 +61,16 @@ routes.get('/', (req, res)=>{
 })
 
 routes.get('/:type', (req, res)=>{
+  console.log(req.query)
+  console.log(req.params)
   client.search({  
       index: 'destinations',
       type: 'DESTINATIONS',
       body: {
+        "from" : 0, "size" : req.query.size || 5,
         query: {
+          // "from" : 0, 'size' : 30,
+          
           match: { "type": req.params.type }
         },
       }

@@ -21,6 +21,7 @@ routes.post('/', (req, res)=>{
         index: 'posts',
         type: 'POSTS',
         body: {
+          "from" : 0, "size" : req.query.size || 5,
           query: {
             match: { "content": req.body.text }
           },

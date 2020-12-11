@@ -37,9 +37,6 @@ routes.post('/', (req, res)=>{
            
             const result = await Promise.all(
               response.hits.hits.map(async hit => {
-              
-                // console.log(hit._source.destination_id)
-                
                 let destination = client.search({
                   index : 'destinations',
                   type : 'DESTINATIONS',
@@ -49,22 +46,29 @@ routes.post('/', (req, res)=>{
                     },
                   }
                 })
-                // destination = (await destination).hits.hits
-                // destination = (await destination).hits.hits[0]
-                // console.log(destination)
+                 
                 destination = (await destination).hits.hits[0]
                 destination = {
                   id: destination._id, ...destination._source
                 }
-                // destination = {
-                //   id: destination._id, ...destination._source
-                // }
-                // const destination = await Destinations.findById(hit._source.destination_id)
-                // // console.log()
-                console.log("🚀 ~ file: routes.js ~ line 64 ~ routes.post ~ destination", destination)
+                let keyphrase = client.search({
+                  index: 'keyphrases',
+                  type: 'KEYPHRASES',
+                  body:{
+                    query:{
+                      "match" : {"destination_id" : hit._source.destination_id}
+                    }
+                  }
+                })
+                keyphrase = (await keyphrase).hits.hits[0]
+                keyphrase = {
+                   ...keyphrase["_source"]["keyphrase"]
+                }
+                
                 return {
                   ...hit,
-                  destination
+                  destination,
+                  keyphrase
                 }
               })
                 

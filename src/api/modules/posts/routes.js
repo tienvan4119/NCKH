@@ -65,6 +65,11 @@ routes.post('/', (req, res)=>{
                    ...keyphrase["_source"]["keyphrase"]
                 ]
                 
+                let property = client.search({
+                  
+                })
+
+
                 return {
                   ...hit,
                   destination,

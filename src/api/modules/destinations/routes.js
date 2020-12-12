@@ -47,7 +47,7 @@ routes.get('/', (req, res)=>{
           "match_all": {}
         },
       }
-    }, function (error, response,status) {
+    },async function (error, response,status) {
       if (error){
         console.log("search error: "+error)
       }
@@ -55,7 +55,33 @@ routes.get('/', (req, res)=>{
         console.log("--- Response ---");
         // console.log(response);
         console.log("--- Hits ---");
-        res.json(response.hits.hits)
+
+        const result = await Promise.all(
+          response.hits.hits.map(async hit => {
+            console.log(hit._id)
+            let keyphrase = client.search({
+              index: 'keyphrases',
+              type: 'KEYPHRASES',
+              body:{
+                query:{
+                  "match" : {"destination_id" : hit._id}
+                }
+              }
+            })
+            keyphrase = (await keyphrase).hits.hits[0]
+            keyphrase = [
+               ...keyphrase["_source"]["keyphrase"]
+            ]
+            
+            return {
+              ...hit,        
+              keyphrase
+            }
+          })
+         )
+
+        // console.log(result)
+        res.json(result)
       }
   })
 })
@@ -69,12 +95,11 @@ routes.get('/:type', (req, res)=>{
       body: {
         "from" : 0, "size" : req.query.size || 5,
         query: {
-          // "from" : 0, 'size' : 30,
           
           match: { "type": req.params.type }
         },
       }
-    }, function (error, response,status) {
+    },async function (error, response,status) {
       if (error){
         console.log("search error: "+error)
       }
@@ -82,7 +107,32 @@ routes.get('/:type', (req, res)=>{
         console.log("--- Response ---");
         // console.log(response);
         console.log("--- Hits ---");
-        res.json(response.hits.hits)
+
+        const result = await Promise.all(
+          response.hits.hits.map(async hit => {
+            console.log(hit._id)
+            let keyphrase = client.search({
+              index: 'keyphrases',
+              type: 'KEYPHRASES',
+              body:{
+                query:{
+                  "match" : {"destination_id" : hit._id}
+                }
+              }
+            })
+            keyphrase = (await keyphrase).hits.hits[0]
+            keyphrase = [
+               ...keyphrase["_source"]["keyphrase"]
+            ]
+            
+            return {
+              ...hit,        
+              keyphrase
+            }
+          })
+         )
+
+        res.json(result)
       }
   })
 })

@@ -61,9 +61,9 @@ routes.post('/', (req, res)=>{
                   }
                 })
                 keyphrase = (await keyphrase).hits.hits[0]
-                keyphrase = {
+                keyphrase = [
                    ...keyphrase["_source"]["keyphrase"]
-                }
+                ]
                 
                 return {
                   ...hit,
